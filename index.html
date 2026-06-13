@@ -60,13 +60,9 @@ a{color:var(--blue)}
 #login .avatar{margin-top:6.5vh;width:104px;height:104px;border-radius:50%;background:linear-gradient(135deg,#8b5cf6,#7c4dff,#e152c8);display:flex;align-items:center;justify-content:center;font-family:var(--disp);font-size:38px;font-weight:800;color:#fff;box-shadow:0 14px 44px rgba(100,50,180,.30),0 0 0 1px rgba(255,255,255,.6)}
 #login .lname{margin-top:15px;font-family:var(--disp);font-size:19px;font-weight:700}
 #login .lrole{font-size:12.5px;opacity:.65;margin-top:3px}
-#login .pwrow{margin-top:20px;display:flex;gap:8px;align-items:center}
-#login .pw{width:212px;padding:11px 16px;border-radius:24px;border:1px solid rgba(20,30,60,.14);outline:none;background:rgba(255,255,255,.65);backdrop-filter:blur(12px);color:var(--txt);font-size:13.5px;text-align:center;transition:.2s}
-#login .pw:focus{background:rgba(255,255,255,.97);border-color:rgba(139,92,246,.45)}
-#login .pw::placeholder{color:var(--txt3)}
-#login .go{width:40px;height:40px;border-radius:50%;border:none;background:#8b5cf6;backdrop-filter:blur(10px);color:#fff;font-size:17px;transition:.2s}
-#login .go:hover{background:#7c4dff;transform:scale(1.05)}
-#login .lhint{margin-top:13px;font-size:11.5px;opacity:.55;font-family:var(--mono)}
+#login .pwrow{margin-top:28px;display:flex;justify-content:center}
+#login .go{padding:14px 44px;border-radius:32px;border:none;background:linear-gradient(120deg,#8b5cf6,#e152c8);color:#fff;font-size:15px;font-weight:700;font-family:var(--disp);letter-spacing:.3px;cursor:pointer;transition:.22s;box-shadow:0 8px 28px rgba(139,92,246,.4)}
+#login .go:hover{transform:translateY(-3px);box-shadow:0 16px 40px rgba(139,92,246,.55)}
 #login.hide{animation:loginOut .6s forwards}
 @keyframes loginOut{to{opacity:0;visibility:hidden;transform:scale(1.03)}}
 
@@ -306,6 +302,27 @@ a{color:var(--blue)}
 }
 @media (prefers-reduced-motion:reduce){*,*::before,*::after{animation-duration:.01ms!important;transition-duration:.01ms!important}}
 :focus-visible{outline:2px solid var(--cyan);outline-offset:2px}
+/* ============ CASE STUDY PREVIEW ============ */
+.cs-body{display:flex;flex-direction:column;overflow:auto}
+.cs-img{position:relative;height:190px;overflow:hidden;flex-shrink:0}
+.cs-img img{width:100%;height:100%;object-fit:cover;object-position:top;display:block}
+.cs-img-over{position:absolute;inset:0;display:flex;align-items:flex-end;justify-content:flex-end;padding:12px;background:linear-gradient(to top,rgba(0,0,0,.5) 0%,transparent 65%)}
+.cs-live-btn{background:#8b5cf6;color:#fff;font-size:12px;font-weight:700;padding:8px 18px;border-radius:20px;text-decoration:none;transition:.15s}
+.cs-live-btn:hover{background:#7c4dff;transform:translateY(-1px)}
+.cs-content{padding:20px 24px 28px;display:flex;flex-direction:column;gap:16px}
+.cs-kv{display:flex;align-items:baseline;gap:12px;font-size:13px}
+.cs-k{color:var(--txt3);font-weight:600;font-size:11px;text-transform:uppercase;letter-spacing:.5px;min-width:58px;flex-shrink:0}
+.cs-v{color:var(--txt);line-height:1.5}
+.cs-role{color:#8b5cf6;font-weight:700}
+.cs-section{display:flex;flex-direction:column;gap:7px}
+.cs-stitle{font-size:11.5px;font-weight:700;text-transform:uppercase;letter-spacing:.6px;color:var(--txt2)}
+.cs-ask{font-size:13px;color:var(--txt2);line-height:1.7;margin:0;padding:12px 14px;background:rgba(139,92,246,.06);border-left:3px solid #8b5cf6;border-radius:0 8px 8px 0}
+.cs-list{margin:0 0 0 16px;padding:0;display:flex;flex-direction:column;gap:5px}
+.cs-list li{font-size:13px;color:var(--txt2);line-height:1.6}
+.cs-cols{display:grid;grid-template-columns:1fr 1fr;gap:20px}
+.cs-chips{display:flex;flex-wrap:wrap;gap:6px;margin-top:2px}
+.cs-chip{font-size:11.5px;font-weight:600;padding:4px 11px;border-radius:20px;background:rgba(139,92,246,.1);color:#8b5cf6;border:1px solid rgba(139,92,246,.2)}
+@media(max-width:640px){.cs-cols{grid-template-columns:1fr}}
 </style>
 </head>
 <body>
@@ -343,12 +360,10 @@ a{color:var(--blue)}
   <div class="ldate" id="ldate"></div>
   <div class="avatar">SH</div>
   <div class="lname">Sri Harsha Chedalla</div>
-  <div class="lrole">Platform Engineer · AI Developer</div>
+  <div class="lrole">Platform Engineer &middot; AI Developer</div>
   <div class="pwrow">
-    <input class="pw" id="lpw" type="password" placeholder="Password — press Enter" autocomplete="off" aria-label="Password">
-    <button class="go" onclick="unlock()" aria-label="Log in">&rarr;</button>
+    <button class="go" onclick="unlock()">Press Enter to continue &rarr;</button>
   </div>
-  <div class="lhint">any password works &mdash; or just press Enter</div>
 </div>
 
 <div id="desktop">
@@ -596,7 +611,7 @@ let bp=0,bmi=0;const bb=document.getElementById('bootbar'),bl=document.getElemen
 const bt=setInterval(()=>{bp=Math.min(100,bp+9+Math.random()*15);bb.style.width=bp+'%';
   bmi=Math.min(BOOT_MSGS.length-1,Math.floor(bp/100*BOOT_MSGS.length));bl.textContent=BOOT_MSGS[bmi];
   if(bp>=100){clearInterval(bt);setTimeout(()=>{const b=document.getElementById('boot');b.classList.add('hide');
-    setTimeout(()=>{b.style.display='none';document.getElementById('lpw').focus();},560);},280);}},150);
+    setTimeout(()=>{b.style.display='none';},580);},280);}},150);
 
 function ltick(){const d=new Date();
   document.getElementById('ltime').textContent=d.toLocaleTimeString('en-IN',{hour:'2-digit',minute:'2-digit',hour12:false});
@@ -607,8 +622,7 @@ let unlocked=false;
 function unlock(){if(unlocked)return;unlocked=true;
   const l=document.getElementById('login');l.classList.add('hide');
   setTimeout(()=>{l.style.display='none';typeHero();},640);}
-document.getElementById('lpw').addEventListener('keydown',e=>{if(e.key==='Enter')unlock()});
-document.getElementById('login').addEventListener('click',e=>{if(e.target.id==='login')document.getElementById('lpw').focus()});
+document.addEventListener('keydown',e=>{if(!unlocked&&e.key==='Enter')unlock();});
 
 /* ============ CLOCK ============ */
 function tick(){const d=new Date();
@@ -760,23 +774,86 @@ PROJECTS.forEach(p=>{
 });
 
 /* preview = embedded real screenshot (always works), with Open-site link */
+/* ============ CASE STUDIES ============ */
+const CASE_STUDIES={
+ sukhya:{
+  role:'Solo Full-Stack Developer',
+  client:'Healthcare startup — medical appointment platform',
+  ask:'Build a patient-facing web app where users find doctors by area, hospital and specialization, then book appointments in under 2 clicks.',
+  built:['Doctor discovery — filter by city area → hospital → specialty','Real-time slot booking with availability calendar','Doctor profiles with credentials, ratings and reviews','Patient dashboard with booking history and reminders','Admin panel for hospital and doctor onboarding','Fully responsive — works on all screen sizes'],
+  tech:['HTML/CSS/JS','Bootstrap','PHP','MySQL','REST APIs'],
+  opt:['Lazy-loaded doctor images → 40% faster initial page load','Debounced search to cut redundant API calls','CSS-only animations — stays lean on low-end Android phones'],
+  url:'https://sukhya.com'
+ },
+ nauto:{
+  role:'Solo Full-Stack Developer',
+  client:'NAutomation Labs — AI-native engineering agency, India',
+  ask:'Build a premium marketing site positioning them as India\'s first AI-native engineering lab. Messaging: "Stop buying AI tools. Ship AI products." Must convert visitors to "Book a call" leads.',
+  built:['Bold hero with animated live AI workflow terminal widget','Services section — full AI product lifecycle (design → build → deploy)','Projects showcase with live status indicators','"Book a call" CTA with lead capture form','Smooth page transitions and scroll-reveal animations','Fully responsive mobile layout'],
+  tech:['HTML/CSS/JS','CSS Animations','Scroll reveal','Responsive layout'],
+  opt:['CSS-only animated terminal — no framework overhead','SVG icons over icon fonts → smaller bundle','Above-the-fold content loads under 1s on 4G'],
+  url:'https://nautomationlabs.com'
+ },
+ v7:{
+  role:'Solo Full-Stack Developer + Shopify Integration',
+  client:'V7 Computers — IT retail store (Hosur, Krishnagiri, Bangalore)',
+  ask:'Build a professional website with a Shopify-integrated shop for laptops, desktops, printers, CCTV and networking gear. Must display authorized dealer badges and drive WhatsApp + quote enquiries.',
+  built:['Full Shopify store with product catalog, cart and checkout','Authorized dealer section — Dell, HP, Lenovo, Canon, Epson','WhatsApp click-to-chat lead capture on every product page','"Get Quote" flow for B2B and bulk orders','Service pages — repairs, CCTV, networking, AMC contracts','3-location info with Google Maps embeds'],
+  tech:['Shopify','Liquid templates','HTML/CSS/JS','Bootstrap','WhatsApp Business API'],
+  opt:['Product images via Shopify CDN — zero asset hosting cost','Deferred third-party scripts → 30% faster LCP','Shopify native checkout — zero custom payment integration'],
+  url:'https://v7computers.in'
+ },
+ mla:{
+  role:'Solo Full-Stack Developer',
+  client:'My Little Adventure — budget travel agency, India (since 2019)',
+  ask:'Build an appealing travel site with lead capture. Must convey trust (4.9★ Google, 10,000+ travelers) and convert visitors into tour enquiries via a "Plan My Trip" funnel.',
+  built:['Full-screen hero with animated headline','Domestic, International and Pilgrimage tour category pages','Plan My Trip lead form with WhatsApp redirect','Social proof section — Google rating, traveler count, year established','Tour listing pages with itinerary cards and pricing','Mobile-first design built for low-bandwidth rural India users'],
+  tech:['HTML/CSS/JS','Bootstrap','WhatsApp Business API','Google Fonts','Mobile-first CSS'],
+  opt:['WebP images + lazy loading → 50% less data transfer on mobile','100% vanilla JS — fast TTFB on shared hosting','Enquiry form submits directly to WhatsApp — no backend needed'],
+  url:'https://mylittleadventure.in'
+ },
+ rag:{
+  role:'AI / RAG Backend Developer — I built the entire RAG pipeline and backend. Frontend HTML was provided by the client.',
+  client:'U.S. immigration law guidance platform (SourcePath)',
+  ask:'Build a RAG system that answers immigration questions (EAD, asylum, green card, naturalization) using ONLY official U.S. government sources — USCIS policy manual, eCFR, INA statutes — with a mandatory inline citation on every answer.',
+  built:['Document ingestion pipeline — USCIS policy manual, eCFR and INA statutes','Semantic chunking tuned to legal paragraph structure','Vector embeddings stored in Pinecone for fast retrieval','Every answer grounded in retrieved source passages with exact citations','Pre-built scenario flows for EAD, asylum, green card, naturalization','Deployed on Vercel with Python FastAPI backend'],
+  tech:['Python','FastAPI','LangChain','OpenAI Embeddings','Pinecone','Vercel','HTML (provided by client)'],
+  opt:['Legal-paragraph-aware chunking → better retrieval accuracy on policy text','Hybrid dense + sparse retrieval for short statutory cross-references','Response streaming so citations appear before the full answer finishes loading'],
+  url:'https://immigration-law-guidance-app.vercel.app'
+ },
+};
+
 function openPreview(id){
   const p=PROJECTS.find(x=>x.id===id);
+  const cs=CASE_STUDIES[id];
   let w=document.getElementById('win-prev-'+id);
   if(!w){
     w=document.createElement('div');w.className='win';w.id='win-prev-'+id;w.dataset.dyn='1';
-    if(window.innerWidth>760)w.style.cssText='left:'+(7+Math.random()*14)+'vw;top:'+(5+Math.random()*6)+'vh;width:min(880px,84vw);height:78vh';
-    w.innerHTML=`<div class="titlebar"><button class="tb-btn tb-close" onclick="closeWin('prev-${id}')" aria-label="Close"></button><button class="tb-btn tb-min" onclick="closeWin('prev-${id}')"></button><button class="tb-btn tb-max" onclick="maxWin('prev-${id}')"></button><span class="t">${p.name}</span></div>
-    <div class="preview-bar">
-      <span>\u{1F512}</span><span class="url">${p.url.replace('https://','')}</span>
-      <a href="${p.url}" target="_blank" rel="noopener">Open \u2197</a>
-    </div>
-    <div class="pv-stage"><img src="${IMG[id]}" alt="${p.name} homepage screenshot"></div>
-    <div class="shot-note">Homepage snapshot \u2014 <a href="${p.url}" target="_blank" rel="noopener">open the live site \u2197</a> for the full experience</div>`;
+    if(window.innerWidth>760)w.style.cssText='left:'+(6+Math.random()*10)+'vw;top:'+(3+Math.random()*5)+'vh;width:min(900px,88vw);height:86vh';
+    const imgHtml=IMG[id]
+      ?`<div class="cs-img"><img src="${IMG[id]}" alt="${p.name} screenshot"><div class="cs-img-over"><a href="${p.url}" target="_blank" rel="noopener" class="cs-live-btn">Open live site \u2197</a></div></div>`:'';
+    const builtHtml=cs.built.map(b=>`<li>${b}</li>`).join('');
+    const techHtml=cs.tech.map(t=>`<span class="cs-chip">${t}</span>`).join('');
+    const optHtml=cs.opt.map(o=>`<li>${o}</li>`).join('');
+    w.innerHTML=`<div class="titlebar"><button class="tb-btn tb-close" onclick="closeWin('prev-${id}')" aria-label="Close"></button><button class="tb-btn tb-min" onclick="closeWin('prev-${id}')"></button><button class="tb-btn tb-max" onclick="maxWin('prev-${id}')"></button><span class="t">${p.name} \u2014 Case Study</span></div>
+    <div class="winbody cs-body">
+      ${imgHtml}
+      <div class="cs-content">
+        <div class="cs-kv"><span class="cs-k">My Role</span><span class="cs-v cs-role">${cs.role}</span></div>
+        <div class="cs-kv"><span class="cs-k">Client</span><span class="cs-v">${cs.client}</span></div>
+        <div class="cs-section"><div class="cs-stitle">\ud83d\udccb What the client asked for</div><p class="cs-ask">${cs.ask}</p></div>
+        <div class="cs-section"><div class="cs-stitle">\ud83d\udd28 What I built</div><ul class="cs-list">${builtHtml}</ul></div>
+        <div class="cs-cols">
+          <div class="cs-section"><div class="cs-stitle">\u2699\ufe0f Tech stack</div><div class="cs-chips">${techHtml}</div></div>
+          <div class="cs-section"><div class="cs-stitle">\ud83d\ude80 How I optimized</div><ul class="cs-list">${optHtml}</ul></div>
+        </div>
+      </div>
+    </div>`;
     document.body.appendChild(w);
   }
   w.classList.add('show');bringFront(w);
 }
+
 
 /* ============ SKILLS ============ */
 const pl=document.getElementById('proc-list');
