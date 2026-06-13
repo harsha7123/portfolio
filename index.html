@@ -961,7 +961,7 @@ document.getElementById('cform').addEventListener('submit',async e=>{
   }
   try{
     await fetch(GOOGLE_SCRIPT_URL,{method:'POST',mode:'no-cors',body:fd});
-    msg.className='ok';msg.textContent='\u2714 Message sent! I\'ll reply within 24 hours.';
+    msg.className='ok';msg.textContent='\u2714 Message sent! I\'ll reply within 2 hours.';
     e.target.reset();
   }catch(err){
     msg.className='err';msg.textContent='Something went wrong \u2014 please email me directly.';
